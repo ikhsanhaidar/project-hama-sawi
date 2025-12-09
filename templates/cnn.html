@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>PestGuard Admin - Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link
+      href="/static/pestguardadmin/vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
+
+    <!-- Custom styles for this template-->
+    <link
+      href="/static/pestguardadmin/css/sb-admin-2.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Additional CSS for custom styling -->
+    <style>
+      .custom-tab-content {
+        padding-left: 0.75rem;
+        padding-top: 0.5rem;
+      }
+
+      .model-image {
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .metric-card {
+        border-radius: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        border: none;
+      }
+
+      .metric-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+      }
+
+      .metric-header {
+        background: linear-gradient(45deg, #4e73df, #224abe);
+        color: white;
+        padding: 1rem;
+        border-bottom: none;
+      }
+
+      .metric-body {
+        padding: 1.5rem;
+      }
+
+      .progress-bar-custom {
+        border-radius: 20px;
+        overflow: hidden;
+        height: 20px;
+      }
+
+      .model-badge {
+        font-size: 0.8rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        margin-left: 10px;
+      }
+
+      .nav-tabs .nav-link {
+        border: none;
+        border-bottom: 3px solid transparent;
+        color: #6c757d;
+        font-weight: 500;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .nav-tabs .nav-link.active {
+        color: #4e73df;
+        border-bottom: 3px solid #4e73df;
+        background-color: transparent;
+      }
+
+      .nav-tabs .nav-link:hover {
+        color: #4e73df;
+        background-color: rgba(78, 115, 223, 0.05);
+      }
+
+      .tab-content {
+        border: 1px solid #e3e6f0;
+        border-top: none;
+        border-radius: 0 0 10px 10px;
+        padding: 1.5rem;
+      }
+
+      .chart-container {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 1.5rem;
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1;
+        background: linear-gradient(45deg, #4e73df, #1cc88a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .model-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .model-card {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .model-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .performance-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+      }
+
+      .bg-high {
+        background-color: rgba(28, 200, 138, 0.1);
+        color: #1cc88a;
+      }
+
+      .bg-medium {
+        background-color: rgba(255, 193, 7, 0.1);
+        color: #f6c23e;
+      }
+
+      .stat-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .bg-primary-light {
+        background-color: rgba(78, 115, 223, 0.1);
+        color: #4e73df;
+      }
+
+      .bg-success-light {
+        background-color: rgba(28, 200, 138, 0.1);
+        color: #1cc88a;
+      }
+
+      .bg-info-light {
+        background-color: rgba(54, 185, 204, 0.1);
+        color: #36b9cc;
+      }
+
+      .bg-warning-light {
+        background-color: rgba(246, 194, 62, 0.1);
+        color: #f6c23e;
+      }
+    </style>
+  </head>
+
+  <body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <ul
+        class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+        id="accordionSidebar"
+      >
+        <!-- Sidebar - Brand -->
+        <a
+          class="sidebar-brand d-flex align-items-center justify-content-center"
+          href="index.html"
+        >
+          <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <div class="sidebar-brand-text mx-3">PestGuard <sup>Admin</sup></div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-1" />
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider" />
+
+        <!-- Heading -->
+        <div class="sidebar-heading">CNN Models</div>
+
+        <!-- Nav Item - Image Analysis -->
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('classification') }}">
+            <i class="fas fa-images"></i>
+            <span>Image Analysis</span>
+          </a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider" />
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+      </ul>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          <nav
+            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+          >
+            <!-- Sidebar Toggle (Topbar) -->
+            <button
+              id="sidebarToggleTop"
+              class="btn btn-link d-md-none rounded-circle mr-3"
+            >
+              <i class="fa fa-bars"></i>
+            </button>
+
+            <!-- Topbar Search -->
+            <form
+              class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+            >
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control bg-light border-0 small"
+                  placeholder="Search for models, metrics..."
+                  aria-label="Search"
+                  aria-describedby="basic-addon2"
+                />
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="button">
+                    <i class="fas fa-search fa-sm"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+              <!-- Nav Item - Alerts -->
+              <li class="nav-item dropdown no-arrow mx-1">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="alertsDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-bell fa-fw"></i>
+                  <!-- Counter - Alerts -->
+                  <span class="badge badge-danger badge-counter">3</span>
+                </a>
+              </li>
+
+              <!-- Nav Item - Messages -->
+              <li class="nav-item dropdown no-arrow mx-1">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="messagesDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-envelope fa-fw"></i>
+                  <!-- Counter - Messages -->
+                  <span class="badge badge-danger badge-counter">7</span>
+                </a>
+              </li>
+
+              <div class="topbar-divider d-none d-sm-block"></div>
+
+              <!-- Nav Item - User Information -->
+              <li class="nav-item dropdown no-arrow">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="userDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"
+                    >Kelompok 14</span
+                  >
+                  <img
+                    class="img-profile rounded-circle"
+                    src="/static/pestguardadmin/img/undraw_profile.svg"
+                  />
+                </a>
+                <!-- Dropdown - User Information -->
+                <div
+                  class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  aria-labelledby="userDropdown"
+                >
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profile
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Settings
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Activity Log
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-toggle="modal"
+                    data-target="#logoutModal"
+                  >
+                    <i
+                      class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
+                    ></i>
+                    Logout
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </nav>
+          <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <!-- Page Heading -->
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <h1 class="h3 mb-0 text-gray-800">Model Performance Dashboard</h1>
+              <a
+                href="#"
+                class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+              >
+                <i class="fas fa-download fa-sm text-white-50"></i> Export
+                Report
+              </a>
+            </div>
+
+            <!-- Statistics Row -->
+            <div class="row mb-4">
+              <!-- Overall Accuracy -->
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                        >
+                          Overall Accuracy
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          95.5%
+                        </div>
+                        <div class="mt-2 mb-0 text-muted text-xs">
+                          <span class="text-success mr-2">
+                            <i class="fas fa-arrow-up"></i> 2.3%
+                          </span>
+                          <span>From previous models</span>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Best Model -->
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                        >
+                          Best Model
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          Model 1 & 4
+                        </div>
+                        <div class="mt-2 mb-0 text-muted text-xs">
+                          <span>96% Accuracy</span>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-trophy fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Total Images -->
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="text-xs font-weight-bold text-info text-uppercase mb-1"
+                        >
+                          Total Images
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          1,240
+                        </div>
+                        <div class="mt-2 mb-0 text-muted text-xs">
+                          <span>Processed successfully</span>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-image fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Average F1 Score -->
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="text-xs font-weight-bold text-warning text-uppercase mb-1"
+                        >
+                          Avg F1 Score
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          95.5%
+                        </div>
+                        <div class="mt-2 mb-0 text-muted text-xs">
+                          <span class="text-success mr-2">
+                            <i class="fas fa-arrow-up"></i> 1.8%
+                          </span>
+                          <span>Improvement</span>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-percentage fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Content Row -->
+            <div class="row">
+              <!-- LEFT SIDE: TABS & IMAGES -->
+              <div class="col-lg-8">
+                <div class="card shadow mb-4">
+                  <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                  >
+                    <h6 class="m-0 font-weight-bold text-primary">
+                      Model Visualization
+                    </h6>
+                    <div class="dropdown no-arrow">
+                      <a
+                        class="dropdown-toggle"
+                        href="#"
+                        role="button"
+                        id="dropdownMenuLink"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i
+                          class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"
+                        ></i>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                        aria-labelledby="dropdownMenuLink"
+                      >
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          data-action="download-all"
+                        >
+                          <i
+                            class="fas fa-download fa-sm fa-fw mr-2 text-gray-400"
+                          ></i>
+                          Download All Charts
+                        </a>
+                        <a class="dropdown-item" href="#" data-action="refresh">
+                          <i
+                            class="fas fa-sync-alt fa-sm fa-fw mr-2 text-gray-400"
+                          ></i>
+                          Refresh Data
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" data-action="export">
+                          <i
+                            class="fas fa-file-export fa-sm fa-fw mr-2 text-gray-400"
+                          ></i>
+                          Export Report
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <!-- Nav Tabs -->
+                    <div class="row mb-3">
+                      <div class="col-12">
+                        <ul
+                          class="nav nav-pills nav-fill"
+                          id="modelTab"
+                          role="tablist"
+                        >
+                          <li class="nav-item" role="presentation">
+                            <button
+                              class="nav-link active"
+                              id="charts-tab"
+                              data-bs-toggle="tab"
+                              data-bs-target="#charts-pane"
+                              type="button"
+                              role="tab"
+                            >
+                              <i class="fas fa-chart-line mr-2"></i>Training
+                              Charts
+                            </button>
+                          </li>
+                          <li class="nav-item" role="presentation">
+                            <button
+                              class="nav-link"
+                              id="matrix-tab"
+                              data-bs-toggle="tab"
+                              data-bs-target="#matrix-pane"
+                              type="button"
+                              role="tab"
+                            >
+                              <i class="fas fa-th mr-2"></i>Confusion Matrix
+                            </button>
+                          </li>
+                          <li class="nav-item" role="presentation">
+                            <button
+                              class="nav-link"
+                              id="images-tab"
+                              data-bs-toggle="tab"
+                              data-bs-target="#images-pane"
+                              type="button"
+                              role="tab"
+                            >
+                              <i class="fas fa-image mr-2"></i>Sample Images
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div class="tab-content" id="modelTabContent">
+                      <!-- Charts Tab -->
+                      <div
+                        class="tab-pane fade show active"
+                        id="charts-pane"
+                        role="tabpanel"
+                        aria-labelledby="charts-tab"
+                      >
+                        <div class="row">
+                          <!-- Model 1 -->
+                          <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-left-primary">
+                              <div class="card-body">
+                                <div
+                                  class="d-flex justify-content-between align-items-center mb-3"
+                                >
+                                  <h6
+                                    class="font-weight-bold text-primary mb-0"
+                                  >
+                                    <i class="fas fa-brain mr-2"></i>CNN From
+                                    Scratch
+                                  </h6>
+                                  <span class="badge badge-primary"
+                                    >Model 1</span
+                                  >
+                                </div>
+                                <div class="text-center">
+                                  <img
+                                    src="/static/pestguardadmin/img/chart/chart1.png"
+                                    class="img-fluid rounded shadow-sm"
+                                    alt="Chart 1"
+                                    style="max-height: 250px; width: auto"
+                                  />
+                                </div>
+                                <div class="mt-3">
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <small class="text-muted d-block"
+                                        >Accuracy</small
+                                      >
+                                      <span class="badge bg-success">96%</span>
+                                    </div>
+                                    <div class="col-6">
+                                      <small class="text-muted d-block"
+                                        >Loss</small
+                                      >
+                                      <span class="badge bg-info">0.12</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Model 2 -->
+                          <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-left-success">
+                              <div class="card-body">
+                                <div
+                                  class="d-flex justify-content-between align-items-center mb-3"
+                                >
+                                  <h6
+                                    class="font-weight-bold text-success mb-0"
+                                  >
+                                    <i class="fas fa-layer-group mr-2"></i>VGG16
+                                    Transfer Learning
+                                  </h6>
+                                  <span class="badge badge-success"
+                                    >Model 2</span
+                                  >
+                                </div>
+                                <div class="text-center">
+                                  <img
+                                    src="/static/pestguardadmin/img/chart/chart2.png"
+                                    class="img-fluid rounded shadow-sm"
+                                    alt="Chart 2"
+                                    style="max-height: 250px; width: auto"
+                                  />
+                                </div>
+                                <div class="mt-3">
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <small class="text-muted d-block"
+                                        >Accuracy</small
+                                      >
+                                      <span class="badge bg-success">95%</span>
+                                    </div>
+                                    <div class="col-6">
+                                      <small class="text-muted d-block"
+                                        >Loss</small
+                                      >
+                                      <span class="badge bg-info">0.15</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Model 3 -->
+                          <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-left-info">
+                              <div class="card-body">
+                                <div
+                                  class="d-flex justify-content-between align-items-center mb-3"
+                                >
+                                  <h6 class="font-weight-bold text-info mb-0">
+                                    <i class="fas fa-network-wired mr-2"></i
+                                    >Xception Model
+                                  </h6>
+                                  <span class="badge badge-info">Model 3</span>
+                                </div>
+                                <div class="text-center">
+                                  <img
+                                    src="/static/pestguardadmin/img/chart/chart3.png"
+                                    class="img-fluid rounded shadow-sm"
+                                    alt="Chart 3"
+                                    style="max-height: 250px; width: auto"
+                                  />
+                                </div>
+                                <div class="mt-3">
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <small class="text-muted d-block"
+                                        >Accuracy</small
+                                      >
+                                      <span class="badge bg-success">95%</span>
+                                    </div>
+                                    <div class="col-6">
+                                      <small class="text-muted d-block"
+                                        >Loss</small
+                                      >
+                                      <span class="badge bg-info">0.14</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Model 4 -->
+                          <div class="col-md-6 mb-4">
+                            <div class="card h-100 border-left-warning">
+                              <div class="card-body">
+                                <div
+                                  class="d-flex justify-content-between align-items-center mb-3"
+                                >
+                                  <h6
+                                    class="font-weight-bold text-warning mb-0"
+                                  >
+                                    <i class="fas fa-mobile-alt mr-2"></i
+                                    >NasNetMobile
+                                  </h6>
+                                  <span class="badge badge-warning"
+                                    >Model 4</span
+                                  >
+                                </div>
+                                <div class="text-center">
+                                  <img
+                                    src="/static/pestguardadmin/img/chart/chart4.png"
+                                    class="img-fluid rounded shadow-sm"
+                                    alt="Chart 4"
+                                    style="max-height: 250px; width: auto"
+                                  />
+                                </div>
+                                <div class="mt-3">
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <small class="text-muted d-block"
+                                        >Accuracy</small
+                                      >
+                                      <span class="badge bg-success">96%</span>
+                                    </div>
+                                    <div class="col-6">
+                                      <small class="text-muted d-block"
+                                        >Loss</small
+                                      >
+                                      <span class="badge bg-info">0.11</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Confusion Matrix Tab -->
+                      <div
+                        class="tab-pane fade"
+                        id="matrix-pane"
+                        role="tabpanel"
+                        aria-labelledby="matrix-tab"
+                      >
+                        <div class="row">
+                          <!-- Model 1 -->
+                          <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                              <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">
+                                  <i class="fas fa-brain mr-2"></i>CNN From
+                                  Scratch
+                                </h6>
+                              </div>
+                              <div class="card-body text-center">
+                                <img
+                                  src="/static/pestguardadmin/img/confusionmatrix/cm1.png"
+                                  class="img-fluid rounded shadow"
+                                  alt="Confusion Matrix 1"
+                                  style="max-height: 300px; width: auto"
+                                />
+                                <div class="mt-3">
+                                  <span class="badge badge-primary mr-2"
+                                    >Class A: 96%</span
+                                  >
+                                  <span class="badge badge-info mr-2"
+                                    >Class B: 95%</span
+                                  >
+                                  <span class="badge badge-success"
+                                    >Class C: 97%</span
+                                  >
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Model 2 -->
+                          <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                              <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-success">
+                                  <i class="fas fa-layer-group mr-2"></i>VGG16
+                                  Model
+                                </h6>
+                              </div>
+                              <div class="card-body text-center">
+                                <img
+                                  src="/static/pestguardadmin/img/confusionmatrix/cm2.png"
+                                  class="img-fluid rounded shadow"
+                                  alt="Confusion Matrix 2"
+                                  style="max-height: 300px; width: auto"
+                                />
+                                <div class="mt-3">
+                                  <span class="badge badge-primary mr-2"
+                                    >Class A: 95%</span
+                                  >
+                                  <span class="badge badge-info mr-2"
+                                    >Class B: 94%</span
+                                  >
+                                  <span class="badge badge-success"
+                                    >Class C: 96%</span
+                                  >
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Model 3 -->
+                          <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                              <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-info">
+                                  <i class="fas fa-network-wired mr-2"></i
+                                  >Xception Model
+                                </h6>
+                              </div>
+                              <div class="card-body text-center">
+                                <img
+                                  src="/static/pestguardadmin/img/confusionmatrix/cm3.png"
+                                  class="img-fluid rounded shadow"
+                                  alt="Confusion Matrix 3"
+                                  style="max-height: 300px; width: auto"
+                                />
+                                <div class="mt-3">
+                                  <span class="badge badge-primary mr-2"
+                                    >Class A: 95%</span
+                                  >
+                                  <span class="badge badge-info mr-2"
+                                    >Class B: 95%</span
+                                  >
+                                  <span class="badge badge-success"
+                                    >Class C: 96%</span
+                                  >
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Model 4 -->
+                          <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                              <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-warning">
+                                  <i class="fas fa-mobile-alt mr-2"></i
+                                  >NasNetMobile
+                                </h6>
+                              </div>
+                              <div class="card-body text-center">
+                                <img
+                                  src="/static/pestguardadmin/img/confusionmatrix/cm4.png"
+                                  class="img-fluid rounded shadow"
+                                  alt="Confusion Matrix 4"
+                                  style="max-height: 300px; width: auto"
+                                />
+                                <div class="mt-3">
+                                  <span class="badge badge-primary mr-2"
+                                    >Class A: 96%</span
+                                  >
+                                  <span class="badge badge-info mr-2"
+                                    >Class B: 96%</span
+                                  >
+                                  <span class="badge badge-success"
+                                    >Class C: 97%</span
+                                  >
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Images Tab -->
+                      <div
+                        class="tab-pane fade"
+                        id="images-pane"
+                        role="tabpanel"
+                        aria-labelledby="images-tab"
+                      >
+                        <div class="row">
+                          <!-- Original Image -->
+                          <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                              <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">
+                                  <i class="fas fa-camera mr-2"></i>Original
+                                  Image
+                                </h6>
+                              </div>
+                              <div class="card-body text-center">
+                                <div class="position-relative">
+                                  <img
+                                    src="/static/pestguardadmin/img/picture/original_image.png"
+                                    class="img-fluid rounded shadow-lg"
+                                    alt="Original Image"
+                                    style="max-height: 350px; width: auto"
+                                  />
+                                  <span
+                                    class="badge badge-light position-absolute top-0 start-0 m-2"
+                                  >
+                                    <i class="fas fa-info-circle mr-1"></i>Raw
+                                  </span>
+                                </div>
+                                <div class="mt-4">
+                                  <h6 class="font-weight-bold text-dark">
+                                    Image Details
+                                  </h6>
+                                  <div class="row text-center">
+                                    <div class="col-4">
+                                      <div class="text-muted small">
+                                        Resolution
+                                      </div>
+                                      <div class="font-weight-bold">
+                                        1024x768
+                                      </div>
+                                    </div>
+                                    <div class="col-4">
+                                      <div class="text-muted small">Format</div>
+                                      <div class="font-weight-bold">PNG</div>
+                                    </div>
+                                    <div class="col-4">
+                                      <div class="text-muted small">Size</div>
+                                      <div class="font-weight-bold">450KB</div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <p class="text-muted mt-3 mb-0">
+                                  <small>
+                                    <i class="fas fa-database mr-1"></i>
+                                    Source: Pest Dataset Collection - Category:
+                                    Pest Detection
+                                  </small>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- RGB Processed Image -->
+                          <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                              <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-success">
+                                  <i class="fas fa-sliders-h mr-2"></i>RGB
+                                  Processed
+                                </h6>
+                              </div>
+                              <div class="card-body text-center">
+                                <div class="position-relative">
+                                  <img
+                                    src="/static/pestguardadmin/img/picture/rgb.png"
+                                    class="img-fluid rounded shadow-lg"
+                                    alt="RGB Image"
+                                    style="max-height: 350px; width: auto"
+                                  />
+                                  <span
+                                    class="badge badge-success position-absolute top-0 start-0 m-2"
+                                  >
+                                    <i class="fas fa-check-circle mr-1"></i
+                                    >Processed
+                                  </span>
+                                </div>
+                                <div class="mt-4">
+                                  <h6 class="font-weight-bold text-dark">
+                                    Processing Details
+                                  </h6>
+                                  <div class="row text-center">
+                                    <div class="col-4">
+                                      <div class="text-muted small">
+                                        Normalization
+                                      </div>
+                                      <div class="font-weight-bold">
+                                        Applied
+                                      </div>
+                                    </div>
+                                    <div class="col-4">
+                                      <div class="text-muted small">Resize</div>
+                                      <div class="font-weight-bold">
+                                        224x224
+                                      </div>
+                                    </div>
+                                    <div class="col-4">
+                                      <div class="text-muted small">
+                                        Augmentation
+                                      </div>
+                                      <div class="font-weight-bold">Basic</div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <p class="text-muted mt-3 mb-0">
+                                  <small>
+                                    <i class="fas fa-cogs mr-1"></i>
+                                    Preprocessed for CNN model input with RGB
+                                    normalization
+                                  </small>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Processing Info -->
+                          <div class="col-12">
+                            <div class="card border-left-info">
+                              <div class="card-body">
+                                <div class="row align-items-center">
+                                  <div class="col-auto">
+                                    <i
+                                      class="fas fa-info-circle fa-2x text-info"
+                                    ></i>
+                                  </div>
+                                  <div class="col">
+                                    <h6 class="font-weight-bold text-info mb-1">
+                                      Image Processing Pipeline
+                                    </h6>
+                                    <p class="text-muted mb-0 small">
+                                      Images undergo preprocessing including
+                                      resizing (224x224), RGB normalization, and
+                                      augmentation before being fed into CNN
+                                      models. This ensures consistency and
+                                      optimal performance across all model
+                                      architectures.
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- RIGHT SIDE: MODEL COMPARISON -->
+              <div class="col-lg-4">
+                <!-- Model Comparison Card -->
+                <div class="card shadow mb-4">
+                  <div class="metric-header">
+                    <h6 class="m-0 font-weight-bold text-white">
+                      <i class="fas fa-balance-scale-left mr-2"></i>Model
+                      Comparison
+                    </h6>
+                  </div>
+                  <div class="metric-body">
+                    <div class="model-grid">
+                      <!-- Model 1 -->
+                      <div class="model-card">
+                        <div
+                          class="d-flex justify-content-between align-items-center mb-3"
+                        >
+                          <div>
+                            <div class="stat-icon bg-primary-light">
+                              <i class="fas fa-brain"></i>
+                            </div>
+                            <h6 class="font-weight-bold mb-1">
+                              CNN From Scratch
+                            </h6>
+                            <span class="performance-badge bg-high"
+                              >Best Performance</span
+                            >
+                          </div>
+                          <div class="text-right">
+                            <div class="stat-number">96%</div>
+                            <small class="text-muted">Accuracy</small>
+                          </div>
+                        </div>
+                        <div class="progress mb-2 progress-bar-custom">
+                          <div
+                            class="progress-bar bg-success"
+                            style="width: 96%"
+                          ></div>
+                        </div>
+                        <div
+                          class="d-flex justify-content-between text-sm text-muted"
+                        >
+                          <span>Precision: 95.5%</span>
+                          <span>Recall: 95.5%</span>
+                        </div>
+                      </div>
+
+                      <!-- Model 2 -->
+                      <div class="model-card">
+                        <div
+                          class="d-flex justify-content-between align-items-center mb-3"
+                        >
+                          <div>
+                            <div class="stat-icon bg-success-light">
+                              <i class="fas fa-layer-group"></i>
+                            </div>
+                            <h6 class="font-weight-bold mb-1">
+                              VGG16 Transfer
+                            </h6>
+                            <span class="performance-badge bg-medium"
+                              >Good</span
+                            >
+                          </div>
+                          <div class="text-right">
+                            <div class="stat-number">95%</div>
+                            <small class="text-muted">Accuracy</small>
+                          </div>
+                        </div>
+                        <div class="progress mb-2 progress-bar-custom">
+                          <div
+                            class="progress-bar bg-info"
+                            style="width: 95%"
+                          ></div>
+                        </div>
+                        <div
+                          class="d-flex justify-content-between text-sm text-muted"
+                        >
+                          <span>Precision: 95%</span>
+                          <span>Recall: 94.5%</span>
+                        </div>
+                      </div>
+
+                      <!-- Model 3 -->
+                      <div class="model-card">
+                        <div
+                          class="d-flex justify-content-between align-items-center mb-3"
+                        >
+                          <div>
+                            <div class="stat-icon bg-info-light">
+                              <i class="fas fa-network-wired"></i>
+                            </div>
+                            <h6 class="font-weight-bold mb-1">Xception</h6>
+                            <span class="performance-badge bg-medium"
+                              >Good</span
+                            >
+                          </div>
+                          <div class="text-right">
+                            <div class="stat-number">95%</div>
+                            <small class="text-muted">Accuracy</small>
+                          </div>
+                        </div>
+                        <div class="progress mb-2 progress-bar-custom">
+                          <div
+                            class="progress-bar bg-warning"
+                            style="width: 95%"
+                          ></div>
+                        </div>
+                        <div
+                          class="d-flex justify-content-between text-sm text-muted"
+                        >
+                          <span>Precision: 94.8%</span>
+                          <span>Recall: 95%</span>
+                        </div>
+                      </div>
+
+                      <!-- Model 4 -->
+                      <div class="model-card">
+                        <div
+                          class="d-flex justify-content-between align-items-center mb-3"
+                        >
+                          <div>
+                            <div class="stat-icon bg-warning-light">
+                              <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <h6 class="font-weight-bold mb-1">NasNetMobile</h6>
+                            <span class="performance-badge bg-high"
+                              >Best Performance</span
+                            >
+                          </div>
+                          <div class="text-right">
+                            <div class="stat-number">96%</div>
+                            <small class="text-muted">Accuracy</small>
+                          </div>
+                        </div>
+                        <div class="progress mb-2 progress-bar-custom">
+                          <div
+                            class="progress-bar bg-danger"
+                            style="width: 96%"
+                          ></div>
+                        </div>
+                        <div
+                          class="d-flex justify-content-between text-sm text-muted"
+                        >
+                          <span>Precision: 96%</span>
+                          <span>Recall: 95.5%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Detailed Metrics Card -->
+                <div class="card shadow mb-4">
+                  <div class="metric-header">
+                    <h6 class="m-0 font-weight-bold text-white">
+                      <i class="fas fa-chart-pie mr-2"></i>Detailed Metrics
+                      (Best Model)
+                    </h6>
+                  </div>
+                  <div class="metric-body">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>Class</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>F1</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <span class="badge badge-primary">Class 1</span>
+                            </td>
+                            <td>96.00%</td>
+                            <td>96.00%</td>
+                            <td><strong>96.00%</strong></td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <span class="badge badge-info">Class D</span>
+                            </td>
+                            <td>95.00%</td>
+                            <td>95.00%</td>
+                            <td><strong>95.00%</strong></td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <span class="badge badge-warning">Class E</span>
+                            </td>
+                            <td>95.00%</td>
+                            <td>95.00%</td>
+                            <td><strong>95.00%</strong></td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <span class="badge badge-success">Class F</span>
+                            </td>
+                            <td>96.00%</td>
+                            <td>96.00%</td>
+                            <td><strong>96.00%</strong></td>
+                          </tr>
+                          <tr class="table-active">
+                            <td><strong>Average</strong></td>
+                            <td><strong>95.50%</strong></td>
+                            <td><strong>95.50%</strong></td>
+                            <td><strong>95.50%</strong></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="text-center mt-3">
+                      <button class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-download mr-1"></i> Export Full Report
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Model Recommendations -->
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                      <i class="fas fa-lightbulb mr-2"></i>Model Recommendations
+                    </h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-4 mb-4">
+                        <div class="card border-left-success h-100">
+                          <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                              <div
+                                class="rounded-circle bg-success text-white p-3 mr-3"
+                              >
+                                <i class="fas fa-trophy"></i>
+                              </div>
+                              <div>
+                                <h6 class="font-weight-bold text-success mb-0">
+                                  Best Overall
+                                </h6>
+                                <p class="text-muted mb-0">CNN From Scratch</p>
+                              </div>
+                            </div>
+                            <p class="text-muted">
+                              Highest accuracy (96%) with good generalization.
+                              Recommended for production.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-4">
+                        <div class="card border-left-primary h-100">
+                          <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                              <div
+                                class="rounded-circle bg-primary text-white p-3 mr-3"
+                              >
+                                <i class="fas fa-bolt"></i>
+                              </div>
+                              <div>
+                                <h6 class="font-weight-bold text-primary mb-0">
+                                  Fast Inference
+                                </h6>
+                                <p class="text-muted mb-0">NasNetMobile</p>
+                              </div>
+                            </div>
+                            <p class="text-muted">
+                              Lightweight model with 96% accuracy. Ideal for
+                              mobile applications.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-4">
+                        <div class="card border-left-warning h-100">
+                          <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                              <div
+                                class="rounded-circle bg-warning text-white p-3 mr-3"
+                              >
+                                <i class="fas fa-balance-scale"></i>
+                              </div>
+                              <div>
+                                <h6 class="font-weight-bold text-warning mb-0">
+                                  Balanced Choice
+                                </h6>
+                                <p class="text-muted mb-0">VGG16 Transfer</p>
+                              </div>
+                            </div>
+                            <p class="text-muted">
+                              95% accuracy with stable performance. Good for
+                              research purposes.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright &copy; PestGuard Admin 2024</span>
+            </div>
+          </div>
+        </footer>
+        <!-- End of Footer -->
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div
+      class="modal fade"
+      id="logoutModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Select "Logout" below if you are ready to end your current session.
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <a class="btn btn-primary" href="login.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/static/pestguardadmin/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/pestguardadmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/static/pestguardadmin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/static/pestguardadmin/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/static/pestguardadmin/vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/static/pestguardadmin/js/demo/chart-area-demo.js"></script>
+    <script src="/static/pestguardadmin/js/demo/chart-pie-demo.js"></script>
+
+    <script>
+      // Add some interactivity
+      $(document).ready(function () {
+        // Add hover effects to model cards
+        $(".model-card").hover(
+          function () {
+            $(this).css("transform", "translateY(-5px)");
+          },
+          function () {
+            $(this).css("transform", "translateY(0)");
+          }
+        );
+
+        // Tab switching animation
+        $(".nav-tabs .nav-link").click(function () {
+          $(".tab-pane").removeClass("show active");
+          $(this).addClass("active");
+        });
+      });
+    </script>
+  </body>
+</html>
+
+<!-- JavaScript untuk mengaktifkan tab -->
+<script>
+  $(document).ready(function () {
+    // Initialize Bootstrap tabs
+    var modelTab = new bootstrap.Tab(document.getElementById("charts-tab"));
+
+    // Tab switching functionality
+    $("#modelTab button").click(function (e) {
+      e.preventDefault();
+      var target = $(this).data("bs-target");
+      $(".tab-pane").removeClass("show active");
+      $(target).addClass("show active");
+      $("#modelTab button").removeClass("active");
+      $(this).addClass("active");
+    });
+
+    // Dropdown actions
+    $('.dropdown-item[data-action="download-all"]').click(function (e) {
+      e.preventDefault();
+      alert("Downloading all charts...");
+      // Add actual download logic here
+    });
+
+    $('.dropdown-item[data-action="refresh"]').click(function (e) {
+      e.preventDefault();
+      location.reload();
+    });
+
+    $('.dropdown-item[data-action="export"]').click(function (e) {
+      e.preventDefault();
+      alert("Exporting report...");
+      // Add export logic here
+    });
+
+    // Image hover effects
+    $(".card img").hover(
+      function () {
+        $(this).css("transform", "scale(1.02)");
+        $(this).css("transition", "transform 0.3s ease");
+      },
+      function () {
+        $(this).css("transform", "scale(1)");
+      }
+    );
+  });
+</script>
+
+<!-- Tambahkan style tambahan untuk tab -->
+<style>
+  .nav-pills .nav-link {
+    color: #6c757d;
+    background-color: transparent;
+    border: 1px solid #e3e6f0;
+    border-radius: 0.5rem;
+    margin: 0 0.25rem;
+    transition: all 0.3s ease;
+  }
+
+  .nav-pills .nav-link.active {
+    background-color: #4e73df;
+    color: white;
+    border-color: #4e73df;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  }
+
+  .nav-pills .nav-link:hover:not(.active) {
+    background-color: rgba(78, 115, 223, 0.1);
+    color: #4e73df;
+    border-color: rgba(78, 115, 223, 0.3);
+  }
+
+  .tab-pane {
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .card {
+    transition: transform 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+  }
+
+  .border-left-primary {
+    border-left: 4px solid #4e73df !important;
+  }
+  .border-left-success {
+    border-left: 4px solid #1cc88a !important;
+  }
+  .border-left-info {
+    border-left: 4px solid #36b9cc !important;
+  }
+  .border-left-warning {
+    border-left: 4px solid #f6c23e !important;
+  }
+</style>

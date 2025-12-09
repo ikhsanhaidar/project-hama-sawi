@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="PestGuard Admin - AI Pest Detection System"
+    />
+    <meta name="author" content="" />
+
+    <title>PestGuard Admin - AI Pest Detection</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/static/favicon.ico" />
+
+    <!-- Custom fonts for this template-->
+    <link
+      href="/static/pestguardadmin/vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
+
+    <!-- Custom styles for this template-->
+    <link href="/static/pestguardadmin/css/sb-admin-2.min.css" rel="stylesheet" />
+
+    <!-- Custom styles -->
+    <style>
+      .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+        transition: transform 0.2s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-header {
+        background-color: #ffffff;
+        border-bottom: 1px solid #e3e6f0;
+        padding: 1.25rem 1.5rem;
+        border-radius: 10px 10px 0 0 !important;
+      }
+
+      .card-header h4 {
+        color: #4e73df;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .btn-primary {
+        background-color: #4e73df;
+        border-color: #4e73df;
+        border-radius: 8px;
+        padding: 10px 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        background-color: #2e59d9;
+        border-color: #2653d4;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(78, 115, 223, 0.4);
+      }
+
+      .btn-primary:disabled {
+        background-color: #858796;
+        border-color: #858796;
+        cursor: not-allowed;
+      }
+
+      .upload-area {
+        border: 2px dashed #e3e6f0;
+        border-radius: 10px;
+        padding: 40px;
+        text-align: center;
+        background-color: #f8f9fc;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-bottom: 20px;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .upload-area:hover {
+        border-color: #4e73df;
+        background-color: #f0f3ff;
+      }
+
+      .upload-area.has-image {
+        border-color: #1cc88a;
+        background-color: #f0fff4;
+      }
+
+      .upload-icon {
+        font-size: 48px;
+        color: #dddfeb;
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+      }
+
+      .upload-area:hover .upload-icon {
+        color: #4e73df;
+      }
+
+      .upload-area.has-image .upload-icon {
+        color: #1cc88a;
+      }
+
+      .result-badge {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        margin: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .badge-cnn {
+        background-color: #e8f4ff;
+        color: #0062cc;
+        border: 1px solid #b3d7ff;
+      }
+
+      .badge-vgg {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeaa7;
+      }
+
+      .badge-xception {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .badge-nasnet {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      .model-result {
+        background: white;
+        color: #5a5c69;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-left: 4px solid #4e73df;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .model-result:hover {
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .model-result.xception {
+        border-left-color: #36b9cc;
+        background: linear-gradient(135deg, #f8f9fc 0%, #e3f7fa 100%);
+      }
+
+      .model-result.vgg {
+        border-left-color: #1cc88a;
+        background: linear-gradient(135deg, #f8f9fc 0%, #e8f8f0 100%);
+      }
+
+      .model-result.nasnet {
+        border-left-color: #f6c23e;
+        background: linear-gradient(135deg, #f8f9fc 0%, #fff8e6 100%);
+      }
+
+      .model-result.cnn {
+        border-left-color: #e74a3b;
+        background: linear-gradient(135deg, #f8f9fc 0%, #ffeaea 100%);
+      }
+
+      .model-result h6 {
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #5a5c69;
+      }
+
+      .prediction-text {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+
+      .confidence-text {
+        font-size: 0.9rem;
+        color: #6c757d;
+        font-weight: 500;
+      }
+
+      .image-preview {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        border: 1px solid #e3e6f0;
+      }
+
+      .image-preview img {
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+        object-fit: contain;
+        background: #f8f9fc;
+      }
+
+      .stats-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e3e6f0;
+      }
+
+      .stats-icon {
+        font-size: 2rem;
+        color: #4e73df;
+        margin-bottom: 10px;
+      }
+
+      .form-check-input:checked {
+        background-color: #4e73df;
+        border-color: #4e73df;
+      }
+
+      .loading-spinner {
+        display: none;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .loading-spinner.show {
+        display: block;
+      }
+
+      .spinner-border {
+        width: 3rem;
+        height: 3rem;
+        color: #4e73df;
+      }
+
+      .alert {
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .success-message {
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+      }
+
+      .error-message {
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+      }
+
+      .model-selector {
+        background: #f8f9fc;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+
+      .model-selector-title {
+        font-weight: 600;
+        color: #5a5c69;
+        margin-bottom: 10px;
+      }
+
+      .no-results {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+      }
+
+      .no-results i {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: #dddfeb;
+      }
+    </style>
+  </head>
+
+  <body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar - SAMA DENGAN CNN.HTML -->
+      <ul
+        class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+        id="accordionSidebar"
+      >
+        <!-- Sidebar - Brand -->
+        <a
+          class="sidebar-brand d-flex align-items-center justify-content-center"
+          href="{{ url_for('main') }}"
+        >
+          <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <div class="sidebar-brand-text mx-3">PestGuard <sup>Admin</sup></div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-1" />
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider" />
+
+        <!-- Heading -->
+        <div class="sidebar-heading">CNN Models</div>
+
+        <!-- Nav Item - Image Analysis -->
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('classification') }}">
+            <i class="fas fa-images"></i>
+            <span>Image Analysis</span>
+          </a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider" />
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+      </ul>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          <nav
+            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+          >
+            <!-- Sidebar Toggle (Topbar) -->
+            <button
+              id="sidebarToggleTop"
+              class="btn btn-link d-md-none rounded-circle mr-3"
+            >
+              <i class="fa fa-bars"></i>
+            </button>
+
+            <!-- Topbar Search -->
+            <form
+              class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+            >
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control bg-light border-0 small"
+                  placeholder="Search for images, results..."
+                  aria-label="Search"
+                  aria-describedby="basic-addon2"
+                />
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="button">
+                    <i class="fas fa-search fa-sm"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+              <!-- Nav Item - User Information -->
+              <li class="nav-item dropdown no-arrow">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="userDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"
+                    >Admin</span
+                  >
+                  <img
+                    class="img-profile rounded-circle"
+                    src="/static/pestguardadmin/img/undraw_profile.svg"
+                  />
+                </a>
+                <!-- Dropdown - User Information -->
+                <div
+                  class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  aria-labelledby="userDropdown"
+                >
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profile
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Settings
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Activity Log
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-toggle="modal"
+                    data-target="#logoutModal"
+                  >
+                    <i
+                      class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
+                    ></i>
+                    Logout
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </nav>
+          <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <!-- Page Heading -->
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <h1 class="h3 mb-0 text-gray-800">Pest Detection</h1>
+              <a
+                href="#"
+                class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+              >
+                <i class="fas fa-download fa-sm text-white-50"></i> Generate
+                Report
+              </a>
+            </div>
+
+            <!-- Alert Messages -->
+            <div id="alertContainer"></div>
+
+            <!-- Content Row -->
+            <div class="row">
+              <!-- Upload Card -->
+              <div class="col-xl-6 col-lg-6">
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                      Upload Image
+                    </h6>
+                  </div>
+                  <div class="card-body">
+                    <form id="uploadForm" enctype="multipart/form-data">
+                      <div
+                        class="upload-area"
+                        id="uploadArea"
+                        onclick="document.getElementById('fileInput').click()"
+                      >
+                        <div class="upload-icon">
+                          <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h5>Drag & Drop or Click to Upload</h5>
+                        <p class="text-muted">
+                          Supported formats: JPG, PNG, JPEG, GIF, TIFF, WEBP
+                        </p>
+                        <p class="text-muted">Max file size: 10MB</p>
+                      </div>
+                      <input
+                        type="file"
+                        id="fileInput"
+                        name="file"
+                        class="d-none"
+                        accept=".jpg,.jpeg,.png,.gif,.tiff,.webp,.jfif"
+                      />
+
+                      <!-- Image Preview -->
+                      <div class="image-preview d-none" id="imagePreview">
+                        <img id="previewImg" src="#" alt="Preview" />
+                      </div>
+
+                      <div class="model-selector">
+                        <div class="model-selector-title">Select Models:</div>
+                        <div class="d-flex flex-wrap">
+                          <div class="form-check mr-4 mb-2">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="xception"
+                              name="xception"
+                              checked
+                            />
+                            <label class="form-check-label" for="xception">
+                              <span class="badge badge-xception result-badge"
+                                ><i class="fas fa-robot mr-1"></i>Xception</span
+                              >
+                            </label>
+                          </div>
+                          <div class="form-check mr-4 mb-2">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="vgg16"
+                              name="vgg16"
+                              checked
+                            />
+                            <label class="form-check-label" for="vgg16">
+                              <span class="badge badge-vgg result-badge"
+                                ><i class="fas fa-layer-group mr-1"></i
+                                >VGG16</span
+                              >
+                            </label>
+                          </div>
+                          <div class="form-check mr-4 mb-2">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="nasnet"
+                              name="nasnet"
+                              checked
+                            />
+                            <label class="form-check-label" for="nasnet">
+                              <span class="badge badge-nasnet result-badge"
+                                ><i class="fas fa-network-wired mr-1"></i
+                                >NASNet</span
+                              >
+                            </label>
+                          </div>
+                          <div class="form-check mb-2">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="cnn"
+                              name="cnn"
+                              checked
+                            />
+                            <label class="form-check-label" for="cnn">
+                              <span class="badge badge-cnn result-badge"
+                                ><i class="fas fa-brain mr-1"></i>Custom
+                                CNN</span
+                              >
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="text-center mt-4">
+                        <button
+                          type="submit"
+                          class="btn btn-primary btn-lg"
+                          id="submitBtn"
+                          disabled
+                        >
+                          <i class="fas fa-search mr-2"></i>Analyze Image
+                        </button>
+                      </div>
+                    </form>
+
+                    <!-- Loading Spinner -->
+                    <div class="loading-spinner" id="loadingSpinner">
+                      <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                      <p class="mt-3 text-muted">Processing image...</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Results Card -->
+              <div class="col-xl-6 col-lg-6">
+                <div class="card shadow mb-4">
+                  <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                  >
+                    <h6 class="m-0 font-weight-bold text-primary">
+                      Detection Results
+                    </h6>
+                    <div class="dropdown no-arrow">
+                      <a
+                        class="dropdown-toggle"
+                        href="#"
+                        role="button"
+                        id="dropdownMenuLink"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i
+                          class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"
+                        ></i>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                        aria-labelledby="dropdownMenuLink"
+                      >
+                        <div class="dropdown-header">Export Results:</div>
+                        <a class="dropdown-item" href="#" id="exportPdf">
+                          <i class="fas fa-file-pdf mr-2"></i>PDF
+                        </a>
+                        <a class="dropdown-item" href="#" id="exportExcel">
+                          <i class="fas fa-file-excel mr-2"></i>Excel
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" id="clearResults">
+                          <i class="fas fa-trash mr-2"></i>Clear Results
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <!-- Uploaded Image Preview -->
+                    <div id="resultImage" class="d-none">
+                      <div class="text-center mb-4">
+                        <div class="image-preview">
+                          <img
+                            id="resultImg"
+                            src="#"
+                            alt="Prediction Image"
+                            class="img-fluid"
+                          />
+                        </div>
+                        <p class="text-muted">Uploaded Image</p>
+                      </div>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div id="resultsContainer">
+                      <div class="no-results" id="noResults">
+                        <i class="fas fa-search"></i>
+                        <h5 class="text-gray-500">No Results Yet</h5>
+                        <p class="text-gray-400">
+                          Upload an image and click "Analyze" to see detection
+                          results
+                        </p>
+                      </div>
+
+                      <div id="resultsContent"></div>
+                    </div>
+
+                    <!-- Stats Summary -->
+                    <div class="mt-4 pt-3 border-top d-none" id="statsSummary">
+                      <h6 class="font-weight-bold mb-3">Summary</h6>
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <div class="stats-card">
+                            <div class="d-flex align-items-center">
+                              <i class="fas fa-check-circle stats-icon mr-3"></i>
+                              <div>
+                                <h6 class="mb-0">Models Processed</h6>
+                                <p class="mb-0 text-gray-600" id="modelsProcessed">
+                                  0 of 4
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="stats-card">
+                            <div class="d-flex align-items-center">
+                              <i class="fas fa-clock stats-icon mr-3"></i>
+                              <div>
+                                <h6 class="mb-0">Processing Time</h6>
+                                <p class="mb-0 text-gray-600">< 2 seconds</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright &copy; PestGuard AI 2024</span>
+            </div>
+          </div>
+        </footer>
+        <!-- End of Footer -->
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div
+      class="modal fade"
+      id="logoutModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Select "Logout" below if you are ready to end your current session.
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <a class="btn btn-primary" href="login.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/static/pestguardadmin/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/pestguardadmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/static/pestguardadmin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/static/pestguardadmin/js/sb-admin-2.min.js"></script>
+
+    <!-- Custom Script -->
+    <script>
+      $(document).ready(function () {
+        const fileInput = document.getElementById("fileInput");
+        const uploadArea = document.getElementById("uploadArea");
+        const previewImg = document.getElementById("previewImg");
+        const imagePreview = document.getElementById("imagePreview");
+        const submitBtn = document.getElementById("submitBtn");
+        const uploadForm = document.getElementById("uploadForm");
+        const loadingSpinner = document.getElementById("loadingSpinner");
+        const alertContainer = document.getElementById("alertContainer");
+        const resultsContent = document.getElementById("resultsContent");
+        const resultImg = document.getElementById("resultImg");
+        const resultImage = document.getElementById("resultImage");
+        const noResults = document.getElementById("noResults");
+        const statsSummary = document.getElementById("statsSummary");
+        const modelsProcessed = document.getElementById("modelsProcessed");
+
+        let currentFile = null;
+
+        // Show alert function
+        function showAlert(message, type = "success") {
+          const alertClass = type === "error" ? "alert-danger" : "alert-success";
+          const iconClass = type === "error" ? "fa-exclamation-circle" : "fa-check-circle";
+          
+          const alertHtml = `
+            <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+              <i class="fas ${iconClass} mr-2"></i>
+              ${message}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          `;
+          
+          alertContainer.innerHTML = alertHtml;
+          
+          // Auto dismiss after 5 seconds
+          setTimeout(() => {
+            $(".alert").alert("close");
+          }, 5000);
+        }
+
+        // Image preview function
+        function previewImage(file) {
+          const reader = new FileReader();
+          
+          reader.onload = function (e) {
+            previewImg.src = e.target.result;
+            imagePreview.classList.remove("d-none");
+            uploadArea.classList.add("has-image");
+            submitBtn.disabled = false;
+            currentFile = file;
+          };
+          
+          reader.readAsDataURL(file);
+        }
+
+        // Drag and drop functionality
+        ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+          uploadArea.addEventListener(eventName, preventDefaults, false);
+          document.body.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+
+        ["dragenter", "dragover"].forEach((eventName) => {
+          uploadArea.addEventListener(eventName, highlight, false);
+        });
+
+        ["dragleave", "drop"].forEach((eventName) => {
+          uploadArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+          uploadArea.style.borderColor = "#4e73df";
+          uploadArea.style.backgroundColor = "#f0f3ff";
+        }
+
+        function unhighlight() {
+          uploadArea.style.borderColor = "#e3e6f0";
+          uploadArea.style.backgroundColor = "#f8f9fc";
+          if (!currentFile) {
+            uploadArea.classList.remove("has-image");
+          }
+        }
+
+        uploadArea.addEventListener("drop", handleDrop, false);
+
+        function handleDrop(e) {
+          const dt = e.dataTransfer;
+          const files = dt.files;
+          
+          if (files.length > 0) {
+            const file = files[0];
+            if (validateFile(file)) {
+              fileInput.files = files;
+              previewImage(file);
+            }
+          }
+        }
+
+        // File input change event
+        fileInput.addEventListener("change", function (e) {
+          if (this.files.length > 0) {
+            const file = this.files[0];
+            if (validateFile(file)) {
+              previewImage(file);
+            }
+          }
+        });
+
+        // File validation
+        function validateFile(file) {
+          const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/tiff", "image/webp"];
+          const maxSize = 10 * 1024 * 1024; // 10MB
+          
+          if (!allowedTypes.includes(file.type)) {
+            showAlert("Please upload a valid image file (JPG, PNG, GIF, TIFF, WEBP)", "error");
+            return false;
+          }
+          
+          if (file.size > maxSize) {
+            showAlert("File size must be less than 10MB", "error");
+            return false;
+          }
+          
+          return true;
+        }
+
+        // Form submission with AJAX
+        uploadForm.addEventListener("submit", async function (e) {
+          e.preventDefault();
+          
+          if (!currentFile) {
+            showAlert("Please select an image first", "error");
+            return;
+          }
+
+          // Check if at least one model is selected
+          const selectedModels = [
+            document.getElementById("xception").checked,
+            document.getElementById("vgg16").checked,
+            document.getElementById("nasnet").checked,
+            document.getElementById("cnn").checked,
+          ].filter(Boolean).length;
+
+          if (selectedModels === 0) {
+            showAlert("Please select at least one model", "error");
+            return;
+          }
+
+          // Show loading spinner
+          loadingSpinner.classList.add("show");
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+
+          const formData = new FormData();
+          formData.append("file", currentFile);
+          formData.append("xception", document.getElementById("xception").checked);
+          formData.append("vgg16", document.getElementById("vgg16").checked);
+          formData.append("nasnet", document.getElementById("nasnet").checked);
+          formData.append("cnn", document.getElementById("cnn").checked);
+
+          try {
+            const response = await fetch("/submit", {
+              method: "POST",
+              body: formData,
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              // Display results
+              displayResults(data);
+              showAlert("Image analyzed successfully!", "success");
+            } else {
+              showAlert(data.message || "Error processing image", "error");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            showAlert("An error occurred while processing the image", "error");
+          } finally {
+            // Hide loading spinner
+            loadingSpinner.classList.remove("show");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-search mr-2"></i>Analyze Image';
+          }
+        });
+
+        // Display results function
+        function displayResults(data) {
+          // Show result image
+          resultImg.src = data.image_url;
+          resultImage.classList.remove("d-none");
+          
+          // Hide no results message
+          noResults.classList.add("d-none");
+          
+          // Clear previous results
+          resultsContent.innerHTML = "";
+          
+          const predictions = data.predictions;
+          let processedCount = 0;
+          
+          // Display each model result
+          if (predictions.xception) {
+            addResultCard("xception", "Xception Model", predictions.xception);
+            processedCount++;
+          }
+          
+          if (predictions.vgg) {
+            addResultCard("vgg", "VGG16 Model", predictions.vgg);
+            processedCount++;
+          }
+          
+          if (predictions.nasnet) {
+            addResultCard("nasnet", "NASNetMobile Model", predictions.nasnet);
+            processedCount++;
+          }
+          
+          if (predictions.cnn) {
+            addResultCard("cnn", "Custom CNN Model", predictions.cnn);
+            processedCount++;
+          }
+          
+          // Update stats
+          modelsProcessed.textContent = `${processedCount} of 4`;
+          statsSummary.classList.remove("d-none");
+        }
+
+        function addResultCard(modelClass, modelName, predictionData) {
+          const resultCard = document.createElement("div");
+          resultCard.className = `model-result ${modelClass}`;
+          
+          const confidencePercent = predictionData.confidence.toFixed(1);
+          const confidenceClass = predictionData.confidence >= 90 ? "text-success" : 
+                                predictionData.confidence >= 70 ? "text-warning" : "text-danger";
+          
+          resultCard.innerHTML = `
+            <h6>
+              <i class="fas ${getModelIcon(modelClass)} mr-2"></i>${modelName}
+            </h6>
+            <div class="prediction-text">${predictionData.prediction}</div>
+            <div class="confidence-text">
+              Confidence: <span class="${confidenceClass} font-weight-bold">${confidencePercent}%</span>
+            </div>
+            <div class="progress mt-2" style="height: 5px;">
+              <div class="progress-bar ${getProgressBarClass(modelClass)}" 
+                   role="progressbar" 
+                   style="width: ${predictionData.confidence}%"
+                   aria-valuenow="${predictionData.confidence}" 
+                   aria-valuemin="0" 
+                   aria-valuemax="100">
+              </div>
+            </div>
+          `;
+          
+          resultsContent.appendChild(resultCard);
+        }
+
+        function getModelIcon(modelClass) {
+          const icons = {
+            xception: "fa-robot",
+            vgg: "fa-layer-group",
+            nasnet: "fa-network-wired",
+            cnn: "fa-brain"
+          };
+          return icons[modelClass] || "fa-cog";
+        }
+
+        function getProgressBarClass(modelClass) {
+          const classes = {
+            xception: "bg-info",
+            vgg: "bg-success",
+            nasnet: "bg-warning",
+            cnn: "bg-danger"
+          };
+          return classes[modelClass] || "bg-primary";
+        }
+
+        // Clear results function
+        document.getElementById("clearResults").addEventListener("click", function(e) {
+          e.preventDefault();
+          
+          resultsContent.innerHTML = "";
+          resultImage.classList.add("d-none");
+          noResults.classList.remove("d-none");
+          statsSummary.classList.add("d-none");
+          
+          // Reset form
+          uploadForm.reset();
+          imagePreview.classList.add("d-none");
+          uploadArea.classList.remove("has-image");
+          submitBtn.disabled = true;
+          currentFile = null;
+          
+          showAlert("Results cleared successfully", "success");
+        });
+
+        // Export functions (placeholder)
+        document.getElementById("exportPdf").addEventListener("click", function(e) {
+          e.preventDefault();
+          showAlert("PDF export feature coming soon!", "info");
+        });
+
+        document.getElementById("exportExcel").addEventListener("click", function(e) {
+          e.preventDefault();
+          showAlert("Excel export feature coming soon!", "info");
+        });
+      });
+    </script>
+  </body>
+</html>
