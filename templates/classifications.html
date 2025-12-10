@@ -30,7 +30,10 @@
     />
 
     <!-- Custom styles for this template-->
-    <link href="/static/pestguardadmin/css/sb-admin-2.min.css" rel="stylesheet" />
+    <link
+      href="/static/pestguardadmin/css/sb-admin-2.min.css"
+      rel="stylesheet"
+    />
 
     <!-- Custom styles -->
     <style>
@@ -675,10 +678,15 @@
                         <div class="col-md-6 mb-3">
                           <div class="stats-card">
                             <div class="d-flex align-items-center">
-                              <i class="fas fa-check-circle stats-icon mr-3"></i>
+                              <i
+                                class="fas fa-check-circle stats-icon mr-3"
+                              ></i>
                               <div>
                                 <h6 class="mb-0">Models Processed</h6>
-                                <p class="mb-0 text-gray-600" id="modelsProcessed">
+                                <p
+                                  class="mb-0 text-gray-600"
+                                  id="modelsProcessed"
+                                >
                                   0 of 4
                                 </p>
                               </div>
@@ -711,7 +719,7 @@
         <footer class="sticky-footer bg-white">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
-              <span>Copyright &copy; PestGuard AI 2024</span>
+              <span>Copyright &copy; PestGuard Admin 2025</span>
             </div>
           </div>
         </footer>
@@ -797,9 +805,11 @@
 
         // Show alert function
         function showAlert(message, type = "success") {
-          const alertClass = type === "error" ? "alert-danger" : "alert-success";
-          const iconClass = type === "error" ? "fa-exclamation-circle" : "fa-check-circle";
-          
+          const alertClass =
+            type === "error" ? "alert-danger" : "alert-success";
+          const iconClass =
+            type === "error" ? "fa-exclamation-circle" : "fa-check-circle";
+
           const alertHtml = `
             <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
               <i class="fas ${iconClass} mr-2"></i>
@@ -809,9 +819,9 @@
               </button>
             </div>
           `;
-          
+
           alertContainer.innerHTML = alertHtml;
-          
+
           // Auto dismiss after 5 seconds
           setTimeout(() => {
             $(".alert").alert("close");
@@ -821,7 +831,7 @@
         // Image preview function
         function previewImage(file) {
           const reader = new FileReader();
-          
+
           reader.onload = function (e) {
             previewImg.src = e.target.result;
             imagePreview.classList.remove("d-none");
@@ -829,7 +839,7 @@
             submitBtn.disabled = false;
             currentFile = file;
           };
-          
+
           reader.readAsDataURL(file);
         }
 
@@ -870,7 +880,7 @@
         function handleDrop(e) {
           const dt = e.dataTransfer;
           const files = dt.files;
-          
+
           if (files.length > 0) {
             const file = files[0];
             if (validateFile(file)) {
@@ -892,26 +902,36 @@
 
         // File validation
         function validateFile(file) {
-          const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/tiff", "image/webp"];
+          const allowedTypes = [
+            "image/jpeg",
+            "image/jpg",
+            "image/png",
+            "image/gif",
+            "image/tiff",
+            "image/webp",
+          ];
           const maxSize = 10 * 1024 * 1024; // 10MB
-          
+
           if (!allowedTypes.includes(file.type)) {
-            showAlert("Please upload a valid image file (JPG, PNG, GIF, TIFF, WEBP)", "error");
+            showAlert(
+              "Please upload a valid image file (JPG, PNG, GIF, TIFF, WEBP)",
+              "error"
+            );
             return false;
           }
-          
+
           if (file.size > maxSize) {
             showAlert("File size must be less than 10MB", "error");
             return false;
           }
-          
+
           return true;
         }
 
         // Form submission with AJAX
         uploadForm.addEventListener("submit", async function (e) {
           e.preventDefault();
-          
+
           if (!currentFile) {
             showAlert("Please select an image first", "error");
             return;
@@ -933,11 +953,15 @@
           // Show loading spinner
           loadingSpinner.classList.add("show");
           submitBtn.disabled = true;
-          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+          submitBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
 
           const formData = new FormData();
           formData.append("file", currentFile);
-          formData.append("xception", document.getElementById("xception").checked);
+          formData.append(
+            "xception",
+            document.getElementById("xception").checked
+          );
           formData.append("vgg16", document.getElementById("vgg16").checked);
           formData.append("nasnet", document.getElementById("nasnet").checked);
           formData.append("cnn", document.getElementById("cnn").checked);
@@ -964,7 +988,8 @@
             // Hide loading spinner
             loadingSpinner.classList.remove("show");
             submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fas fa-search mr-2"></i>Analyze Image';
+            submitBtn.innerHTML =
+              '<i class="fas fa-search mr-2"></i>Analyze Image';
           }
         });
 
@@ -973,37 +998,37 @@
           // Show result image
           resultImg.src = data.image_url;
           resultImage.classList.remove("d-none");
-          
+
           // Hide no results message
           noResults.classList.add("d-none");
-          
+
           // Clear previous results
           resultsContent.innerHTML = "";
-          
+
           const predictions = data.predictions;
           let processedCount = 0;
-          
+
           // Display each model result
           if (predictions.xception) {
             addResultCard("xception", "Xception Model", predictions.xception);
             processedCount++;
           }
-          
+
           if (predictions.vgg) {
             addResultCard("vgg", "VGG16 Model", predictions.vgg);
             processedCount++;
           }
-          
+
           if (predictions.nasnet) {
             addResultCard("nasnet", "NASNetMobile Model", predictions.nasnet);
             processedCount++;
           }
-          
+
           if (predictions.cnn) {
             addResultCard("cnn", "Custom CNN Model", predictions.cnn);
             processedCount++;
           }
-          
+
           // Update stats
           modelsProcessed.textContent = `${processedCount} of 4`;
           statsSummary.classList.remove("d-none");
@@ -1012,11 +1037,15 @@
         function addResultCard(modelClass, modelName, predictionData) {
           const resultCard = document.createElement("div");
           resultCard.className = `model-result ${modelClass}`;
-          
+
           const confidencePercent = predictionData.confidence.toFixed(1);
-          const confidenceClass = predictionData.confidence >= 90 ? "text-success" : 
-                                predictionData.confidence >= 70 ? "text-warning" : "text-danger";
-          
+          const confidenceClass =
+            predictionData.confidence >= 90
+              ? "text-success"
+              : predictionData.confidence >= 70
+              ? "text-warning"
+              : "text-danger";
+
           resultCard.innerHTML = `
             <h6>
               <i class="fas ${getModelIcon(modelClass)} mr-2"></i>${modelName}
@@ -1035,7 +1064,7 @@
               </div>
             </div>
           `;
-          
+
           resultsContent.appendChild(resultCard);
         }
 
@@ -1044,7 +1073,7 @@
             xception: "fa-robot",
             vgg: "fa-layer-group",
             nasnet: "fa-network-wired",
-            cnn: "fa-brain"
+            cnn: "fa-brain",
           };
           return icons[modelClass] || "fa-cog";
         }
@@ -1054,40 +1083,46 @@
             xception: "bg-info",
             vgg: "bg-success",
             nasnet: "bg-warning",
-            cnn: "bg-danger"
+            cnn: "bg-danger",
           };
           return classes[modelClass] || "bg-primary";
         }
 
         // Clear results function
-        document.getElementById("clearResults").addEventListener("click", function(e) {
-          e.preventDefault();
-          
-          resultsContent.innerHTML = "";
-          resultImage.classList.add("d-none");
-          noResults.classList.remove("d-none");
-          statsSummary.classList.add("d-none");
-          
-          // Reset form
-          uploadForm.reset();
-          imagePreview.classList.add("d-none");
-          uploadArea.classList.remove("has-image");
-          submitBtn.disabled = true;
-          currentFile = null;
-          
-          showAlert("Results cleared successfully", "success");
-        });
+        document
+          .getElementById("clearResults")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+
+            resultsContent.innerHTML = "";
+            resultImage.classList.add("d-none");
+            noResults.classList.remove("d-none");
+            statsSummary.classList.add("d-none");
+
+            // Reset form
+            uploadForm.reset();
+            imagePreview.classList.add("d-none");
+            uploadArea.classList.remove("has-image");
+            submitBtn.disabled = true;
+            currentFile = null;
+
+            showAlert("Results cleared successfully", "success");
+          });
 
         // Export functions (placeholder)
-        document.getElementById("exportPdf").addEventListener("click", function(e) {
-          e.preventDefault();
-          showAlert("PDF export feature coming soon!", "info");
-        });
+        document
+          .getElementById("exportPdf")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            showAlert("PDF export feature coming soon!", "info");
+          });
 
-        document.getElementById("exportExcel").addEventListener("click", function(e) {
-          e.preventDefault();
-          showAlert("Excel export feature coming soon!", "info");
-        });
+        document
+          .getElementById("exportExcel")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            showAlert("Excel export feature coming soon!", "info");
+          });
       });
     </script>
   </body>
